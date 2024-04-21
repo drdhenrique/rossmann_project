@@ -10,6 +10,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from IPython.core.display import HTML
+from IPython.display import Image
 
 # %%
 ## Configurando os gráficos
@@ -192,3 +193,76 @@ sns.boxplot(x='store_type',y='sales', data=aux1, hue = 'store_type');
 plt.subplot(1,3,3)
 sns.boxplot(x='assortment',y='sales', data=aux1, hue = 'assortment');
 # %%
+## Feature Engeneering
+Image('images\mapa_de_hipoteses.png')
+
+# %%
+## Construção das hipóteses com base no mapa de hipóteses
+
+# Criação inicial de hipóteses. Hipótese são apostas. Aqui podemos
+# tentar criar muitas relações com todos os Agentes/atributos do
+# mapa de hipóteses
+
+"""
+Lojas:
+1. Lojas com mais funcionários deveriam vender mais
+2. Lojas com estoque maior deveriam vender mais
+3. Lojas maiores deveriam vender mais
+4. Lojas com maior variabilidade de produtos deveriam vender mais
+5. Lojas com competidores mais próximos deveriam vender menos
+
+Tempo
+1. Lojas que ficam fechadas em mais feriados deveriam vender menos
+2. Lojas que abrem fds deveriam vender mais
+3. Lojam vendem mais a partir do dia 10, em média
+4. Durante os períodos de férias escolares, vende-se menos
+5. No inverno vende-se mais
+
+Produtos
+1. Produtos em promoção aumentam o faturamento médio
+2. Produtos/cat de produtos em promoção aumentam o faturamento
+3. Lojas com preços maiores para determinados produtos vendem menos
+4. Lojas com estoques maiores vendem mais
+5. Produtos mais expostos vendem mais
+
+Clientes
+1. Clientes com mais filhos compram mais
+2. Clientes com salário maior compram mais
+3. Clientes mais velhos compram mais
+4. Clientes que vão mais vezes até a loja compram mais
+
+Localidade
+1. Lojas perto de hospitais vendem mais
+2. Lojas perto de escolas/universidades vendem mais
+3. Lojas urbanas vendem mais que rurais
+4. Lojas centrais vendem mais que lojas em bairros
+
+"""
+# %%
+# Lista final de Hipóteses. Nessa primeira iteração do CRISP,
+# vamos nos atentar apenas às hipóteses que podem ser respondidas
+# com os dados disponíveis.
+
+"""
+
+1. Lojas maiores deveriam vender mais
+2. Lojas com maior variabilidade de produtos deveriam vender mais
+3. Lojas com competidores mais próximos deveriam vender menos
+4e. Lojas com competidores à mais tempo deveriam vendem mais.
+5. Lojas que ficam fechadas em mais feriados deveriam vender menos
+6. Lojas que abrem fds deveriam vender mais
+7. Lojam vendem mais a partir do dia 10, em média
+8. Durante os períodos de férias escolares, vende-se menos
+9. No inverno vende-se mais
+10. Lojas com promoção aumentam o faturamento médio
+11. Lojas com promoções ativas por mais tempo deveriam vender mais.
+12. Lojas com mais dias de promoção deveriam vender mais.
+13. Lojas com mais promoções consecutivas deveriam vender mais.
+14. Lojas abertas durante o feriado de Natal deveriam vender mais.
+15. Lojas deveriam vender mais ao longo dos anos.
+16. Lojas deveriam vender mais no segundo semestre do ano.
+17. Lojas deveriam vender menos durante os feriados escolares.
+
+"""
+
+df1[(df1.state_holiday != 0) & (df1.open == 1)].sample(8)
