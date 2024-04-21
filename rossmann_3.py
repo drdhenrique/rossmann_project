@@ -14,7 +14,7 @@ import datetime """
 
 # %%
 ## Configurando os gráficos
- def jupyter_settings():
+def jupyter_settings():
     %matplotlib inline
     
     """ plt.style.use( 'bmh' )
@@ -28,8 +28,8 @@ import datetime """
 jupyter_settings() 
 
 # %%
-df3 = pd.read_csv('data/df2.csv')
-df3.drop('Unnamed: 0', axis = 1, inplace = True)
+df3 = pd.read_csv('data/df2.csv', index_col= [0])
+
 
 # %%
 df3.head(3)
@@ -48,4 +48,7 @@ df3 = df3[(df3['open'] != 0) & (df3['sales'] > 0)]
 cols_drop = ['open', 'customers','month_map', 'promo_interval' ]
 df3 = df3.drop(cols_drop, axis = 1)
 
+# %%
+
+df3.to_csv('data/df3.csv')
 # %%
