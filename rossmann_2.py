@@ -309,4 +309,6 @@ df2['assortment'] = df2['assortment'].apply(lambda x: 'basic' if x =='a'else
 
 df2['state_holiday'] = df2['state_holiday'].apply( lambda x: 'public_holiday' if x == 'a' else 'easter_holiday' if x == 'b' else 'christmas' if x == 'c' else 'regular_day' )
 
+# %%
 
+df2.to_csv('data/df2.csv')
