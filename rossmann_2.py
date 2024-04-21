@@ -11,6 +11,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from IPython.core.display import HTML
 from IPython.display import Image
+import datetime
 
 # %%
 ## Configurando os gráficos
@@ -194,6 +195,11 @@ plt.subplot(1,3,3)
 sns.boxplot(x='assortment',y='sales', data=aux1, hue = 'assortment');
 # %%
 ## Feature Engeneering
+
+df2 = df1.copy()
+
+# %%
+## Mapa de Hipóteses
 Image('images\mapa_de_hipoteses.png')
 
 # %%
@@ -264,5 +270,43 @@ Localidade
 17. Lojas deveriam vender menos durante os feriados escolares.
 
 """
+# Ano
+df2['year'] = df2.date.dt.year
 
-df1[(df1.state_holiday != 0) & (df1.open == 1)].sample(8)
+# Mês
+df2['month'] = df2.date.dt.month
+
+# Week
+df2['week_of_year'] = df2.date.dt.isocalendar().week
+
+# Dia
+df2['day'] = df2.date.dt.day
+
+# Year - week
+df2['year_week'] = df2.date.dt.strftime( '%Y-%W')
+
+
+# %%
+
+# achando tempo em meses que a competição começou
+df2['competition_since '] = df2.apply(lambda x: datetime.datetime(year=x['competition_open_since_year'], 
+                  month= x['competition_open_since_month'], 
+                  day=1), axis= 1)
+
+df2['competition_time_months'] = ((df2['date'] - df2['competition_since '])/30).apply(lambda x: x.days).astype( 'Int64')
+# %%
+
+# promo since
+
+df2['promo_since'] = df2['promo2_since_year'].astype( str ) + '-' + df2['promo2_since_week'].astype( str )
+df2['promo_since'] = df2['promo_since'].apply( lambda x: datetime.datetime.strptime( x + '-1', '%Y-%W-%w' ) - datetime.timedelta( days=7 ) )
+df2['weeks_promo2'] = ( ( df2['date'] - df2['promo_since'] )/7 ).apply( lambda x: x.days ).astype( int )
+
+# %%
+
+df2['assortment'] = df2['assortment'].apply(lambda x: 'basic' if x =='a'else
+                                            'extra' if x == 'b' else 'extended' )
+
+df2['state_holiday'] = df2['state_holiday'].apply( lambda x: 'public_holiday' if x == 'a' else 'easter_holiday' if x == 'b' else 'christmas' if x == 'c' else 'regular_day' )
+
+
