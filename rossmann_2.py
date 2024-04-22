@@ -254,7 +254,7 @@ Localidade
 1. Lojas maiores deveriam vender mais
 2. Lojas com maior variabilidade de produtos deveriam vender mais
 3. Lojas com competidores mais próximos deveriam vender menos
-4e. Lojas com competidores à mais tempo deveriam vendem mais.
+4. Lojas com competidores à mais tempo deveriam vendem mais.
 5. Lojas que ficam fechadas em mais feriados deveriam vender menos
 6. Lojas que abrem fds deveriam vender mais
 7. Lojam vendem mais a partir do dia 10, em média

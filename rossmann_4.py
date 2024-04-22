@@ -55,7 +55,7 @@ num_attributes.hist(bins = 50);
 
 # %%
 ## Exploração das variáveis categóricas
-cat_attributes.store_type.value_counts()
+cat_attributes.assortment.value_counts()
 
 # %%
 plt.subplot( 3, 2, 1 )
@@ -86,4 +86,43 @@ sns.kdeplot(x = 'sales', label = 'c',fill = True, data = df4[df4['store_type'] =
 sns.kdeplot(x = 'sales', label = 'd',fill = True, data = df4[df4['store_type'] == 'd']);
 plt.legend()
 # %%
+## Análise Bivariada
 
+"""
+
+H2. Lojas com maior variabilidade de produtos deveriam vender mais
+
+"""
+
+aux1 = df4[['assortment', 'sales']].groupby('assortment').mean().reset_index()
+
+sns.barplot(x = 'assortment', y = 'sales', data= aux1, hue= 'assortment', palette= 'Set1');
+# %%
+aux2 = df4[['year_week', 'assortment', 'sales']].groupby(['assortment', 'year_week']).mean().reset_index()
+
+aux3 = aux2.pivot(index= 'year_week', values='sales',columns='assortment').plot()
+
+# Concluímos então que lojas com maior variedade vendem mais em média
+
+
+# %%
+"""
+H1. Lojas maiores deveriam vender mais
+
+"""
+aux1 = df4[['store_type', 'sales']].groupby('store_type').mean().reset_index()
+
+sns.barplot(x = 'store_type', y = 'sales', data= aux1, hue= 'store_type', palette= 'Set1');
+
+# Aqui não conseguimos concluir muita coisa, devido ao fato de não sabermos o que significa cada classificação 'a', até 'd'.
+# %%
+
+"""
+
+H3. Lojas com competidores mais próximos deveriam vender menos
+H4. Lojas com competidores à mais tempo deveriam vendem mais.
+
+"""
+
+aux1 = df4[['competition_distance', 'sales']].groupby('competition_distance').mean().reset_index()
+sns.scatterplot(x = 'competition_distance', y = 'sales', data= aux1,);
