@@ -191,4 +191,4 @@ sns.boxplot(x='store_type',y='sales', data=aux1, hue = 'store_type');
 
 plt.subplot(1,3,3)
 sns.boxplot(x='assortment',y='sales', data=aux1, hue = 'assortment');
-# %%
+
