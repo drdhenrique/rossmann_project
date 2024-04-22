@@ -120,9 +120,40 @@ sns.barplot(x = 'store_type', y = 'sales', data= aux1, hue= 'store_type', palett
 """
 
 H3. Lojas com competidores mais próximos deveriam vender menos
+
+"""
+aux1 = df4[['competition_distance', 'sales']].groupby( 'competition_distance' ).mean().reset_index()
+
+plt.subplot( 1, 3, 1 )
+sns.scatterplot( x ='competition_distance', y='sales', data=aux1 );
+
+plt.subplot( 1, 3, 2 )
+bins = list( np.arange( 0, 20000, 1000) )
+aux1['competition_distance_binned'] = pd.cut( aux1['competition_distance'],bins=bins )
+aux2 = aux1[['competition_distance_binned', 'sales']].groupby('competition_distance_binned',observed=True ).sum().reset_index()
+sns.barplot( x='competition_distance_binned', y='sales', data=aux2 );
+plt.xticks( rotation=90);
+
+plt.subplot( 1, 3, 3 )
+sns.heatmap( df4[['competition_distance', 'sales']].corr(), annot= True);
+# %%
+
+"""
+
 H4. Lojas com competidores à mais tempo deveriam vendem mais.
 
 """
 
-aux1 = df4[['competition_distance', 'sales']].groupby('competition_distance').mean().reset_index()
-sns.scatterplot(x = 'competition_distance', y = 'sales', data= aux1,);
+plt.subplot( 1, 3, 1 )
+aux1 = df4[['competition_time_months', 'sales']].groupby('competition_time_months' ).sum().reset_index()
+aux2 = aux1[( aux1['competition_time_months'] < 120 ) & (aux1['competition_time_months'] != 0 )]
+sns.barplot( x='competition_time_months', y='sales', data=aux2  );
+plt.xticks( rotation=90 );
+plt.subplot( 1, 3, 2 )
+sns.regplot( x='competition_time_months', y='sales', data=aux2 );
+plt.subplot( 1, 3, 3 )
+x = sns.heatmap( aux1.corr(method='kendall'), annot=True );
+
+# %%
+
+
